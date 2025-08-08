@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      - DATABASE_URL=sqlite:////app/instance/app.db
+    volumes:
+      - ./backend/instance:/app/instance
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    environment:
+      - FRONTEND_API_BASE_URL=http://localhost:5000
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
