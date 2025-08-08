@@ -12,7 +12,9 @@ COPY --from=build /frontend/dist /usr/share/nginx/html
 # Default runtime config.js; can be overridden at container start via env or volume
 COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
 COPY frontend/docker-entrypoint.sh /docker-entrypoint.d/99-config.sh
-RUN chmod +x /docker-entrypoint.d/99-config.sh
+# Normalize line endings to LF to avoid /bin/sh^M or not found issues on Alpine
+RUN sed -i 's/\r$//' /docker-entrypoint.d/99-config.sh \
+	&& chmod +x /docker-entrypoint.d/99-config.sh
 
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
