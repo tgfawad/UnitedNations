@@ -45,7 +45,7 @@ def test_us_population_data_handles_failure(monkeypatch):
     def fake_get(*args, **kwargs):
         return DummyResp()
 
-    import app.routes as routes
+    import app.routes.rules as routes
     monkeypatch.setattr(routes.requests, 'get', fake_get)
 
     resp = client.get('/api/rules/us_population_data')
@@ -69,7 +69,7 @@ def test_us_population_data_transforms(monkeypatch):
                 ]
             }
 
-    import app.routes as routes
+    import app.routes.rules as routes
     monkeypatch.setattr(routes.requests, 'get', lambda *args, **kwargs: DummyResp())
 
     resp = client.get('/api/rules/us_population_data')

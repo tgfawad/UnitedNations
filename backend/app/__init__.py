@@ -5,6 +5,8 @@ from .config import get_database_uri
 
 db = SQLAlchemy()
 
+__all__ = ["create_app", "db"]
+
 
 def create_app():
     app = Flask(__name__)
@@ -14,6 +16,7 @@ def create_app():
     CORS(app)
     db.init_app(app)
 
+    # Import models package (exports AboutText) and routes blueprint
     from .models import AboutText
     from .routes import api_bp
 

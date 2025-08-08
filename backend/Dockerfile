@@ -17,8 +17,9 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY backend /app
 
-# Create a non-root user
-RUN useradd -m appuser
+# Create non-root user and ensure ownership of the app dir
+RUN useradd -m appuser && chown -R appuser:appuser /app
+
 USER appuser
 
 EXPOSE 5000
